@@ -54,7 +54,7 @@ class ContactsList extends StatelessWidget {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => ContactForm(),
+                  builder: (context) => ContactForm(contactDao: contactDao,),
                 ),
               );
         },
