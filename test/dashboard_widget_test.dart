@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttertests/main.dart';
 import 'package:fluttertests/screens/dashboard.dart';
 
+import 'matchers.dart';
+
 void main() {
   testWidgets('should display the main image when the dashboard is opened',
       (WidgetTester tester) async {
@@ -26,11 +28,4 @@ void main() {
         featureItemMatcher(widget, 'Transaction Feed', Icons.description));
     expect(transactionFeedFeatureItem, findsOneWidget);
   });
-}
-
-bool featureItemMatcher(Widget widget, String name, IconData icon) {
-  if (widget is FeatureItem) {
-    return widget.name == name && widget.icon == icon;
-  }
-  return false;
 }
