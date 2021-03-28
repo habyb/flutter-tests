@@ -4,7 +4,7 @@ import 'package:fluttertests/database/dao/contact_dao.dart';
 import 'package:fluttertests/main.dart';
 import 'package:fluttertests/screens/dashboard.dart';
 
-import 'matchers.dart';
+import '../matchers/matchers.dart';
 
 void main() {
   testWidgets('should display the main image when the dashboard is opened',

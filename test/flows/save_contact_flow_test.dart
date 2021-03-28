@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttertests/main.dart';
-import 'package:fluttertests/models/contact.dart';
 import 'package:fluttertests/screens/contact_form.dart';
 import 'package:fluttertests/screens/contacts_list.dart';
 import 'package:fluttertests/screens/dashboard.dart';
-import 'package:mockito/mockito.dart';
 
-import 'matchers.dart';
-import 'mocks.dart';
+import '../mocks/mocks.dart';
+import 'actions.dart';
 
 void main() {
   testWidgets('should save a contact', (tester) async {
@@ -18,10 +16,7 @@ void main() {
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
 
-    final transferFeatureItem = find.byWidgetPredicate((widget) =>
-        featureItemMatcher(widget, 'Transfer', Icons.monetization_on));
-    expect(transferFeatureItem, findsOneWidget);
-    await tester.tap(transferFeatureItem);
+    await clickOnTheTransferFeatureItem(tester);
     await tester.pumpAndSettle();
 
     final contactsList = find.byType(ContactsList);
