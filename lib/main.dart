@@ -1,11 +1,17 @@
+import 'package:fluttertests/database/dao/contact_dao.dart';
+
 import 'screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(FlutterTests());
+  runApp(FlutterTests(contactDao: ContactDao(),));
 }
 
 class FlutterTests extends StatelessWidget {
+  final ContactDao contactDao;
+
+  FlutterTests({@required this.contactDao});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class FlutterTests extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: Dashboard(),
+      home: Dashboard(contactDao: contactDao),
     );
   }
 }

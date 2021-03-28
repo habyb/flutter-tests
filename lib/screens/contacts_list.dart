@@ -4,13 +4,10 @@ import 'package:fluttertests/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertests/screens/transaction_form.dart';
 
-class ContactsList extends StatefulWidget {
-  @override
-  _ContactsListState createState() => _ContactsListState();
-}
+class ContactsList extends StatelessWidget {
+  final ContactDao contactDao;
 
-class _ContactsListState extends State<ContactsList> {
-  final ContactDao _dao = ContactDao();
+  ContactsList({@required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +17,7 @@ class _ContactsListState extends State<ContactsList> {
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
-        future: _dao.findAll(),
+        future: contactDao.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -59,9 +56,6 @@ class _ContactsListState extends State<ContactsList> {
                 MaterialPageRoute(
                   builder: (context) => ContactForm(),
                 ),
-              )
-              .then(
-                (value) => setState(() {}),
               );
         },
         child: Icon(

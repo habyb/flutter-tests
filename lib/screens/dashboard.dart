@@ -1,8 +1,12 @@
+import 'package:fluttertests/database/dao/contact_dao.dart';
 import 'package:fluttertests/screens/contacts_list.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertests/screens/transactions_list.dart';
 
 class Dashboard extends StatelessWidget {
+  final ContactDao contactDao;
+  Dashboard({@required this.contactDao});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +100,9 @@ class FeatureItem extends StatelessWidget {
 void _showContacsList(BuildContext context) {
   Navigator.of(context).push(
     MaterialPageRoute(
-      builder: (context) => ContactsList(),
+      builder: (context) => ContactsList(
+        contactDao: ContactDao(),
+      ),
     ),
   );
 }
