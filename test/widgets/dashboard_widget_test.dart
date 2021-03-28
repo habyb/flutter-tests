@@ -16,7 +16,7 @@ void main() {
   testWidgets(
       'should display the transfer feature when the dashboard is opened',
       (tester) async {
-    await tester.pumpWidget(MaterialApp(home: Dashboard(contactDao: ContactDao())));
+    await tester.pumpWidget(MaterialApp(home: Dashboard()));
     final transferFeatureItem = find.byWidgetPredicate((widget) =>
         featureItemMatcher(widget, 'Transfer', Icons.monetization_on));
     expect(transferFeatureItem, findsOneWidget);
@@ -24,7 +24,7 @@ void main() {
   testWidgets(
       'should display the transaction feed feature when the dashboard is opened',
       (tester) async {
-    await tester.pumpWidget(MaterialApp(home: Dashboard(contactDao: ContactDao())));
+    await tester.pumpWidget(MaterialApp(home: Dashboard()));
     final transactionFeedFeatureItem = find.byWidgetPredicate((widget) =>
         featureItemMatcher(widget, 'Transaction Feed', Icons.description));
     expect(transactionFeedFeatureItem, findsOneWidget);

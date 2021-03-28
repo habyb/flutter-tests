@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertests/screens/transactions_list.dart';
 
 class Dashboard extends StatelessWidget {
-  final ContactDao contactDao;
-  Dashboard({@required this.contactDao});
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

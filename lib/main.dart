@@ -24,7 +24,7 @@ class FlutterTests extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: Dashboard(contactDao: contactDao),
+      home: Dashboard(),
     );
   }
 }
