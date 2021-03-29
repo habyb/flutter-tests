@@ -1,14 +1,11 @@
 import 'package:fluttertests/database/dao/contact_dao.dart';
 import 'package:fluttertests/models/contact.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertests/widgets/app_dependencies.dart';
 
 class ContactForm extends StatefulWidget {
-  final ContactDao contactDao;
-
-  ContactForm({@required this.contactDao});
-
   @override
-  _ContactFormState createState() => _ContactFormState(contactDao: contactDao);
+  _ContactFormState createState() => _ContactFormState();
 }
 
 class _ContactFormState extends State<ContactForm> {
@@ -17,12 +14,10 @@ class _ContactFormState extends State<ContactForm> {
   final TextEditingController _accountNumberController =
       TextEditingController();
 
-  final ContactDao contactDao;
-
-  _ContactFormState({@required this.contactDao});
-
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -57,7 +52,7 @@ class _ContactFormState extends State<ContactForm> {
                     final int accountNumber =
                         int.tryParse(_accountNumberController.text);
                     final Contact newContact = Contact(0, name, accountNumber);
-                    _save(newContact, context);
+                    _save(dependencies.contactDao, newContact, context);
                   },
                   child: Text('Create'),
                 ),
@@ -69,7 +64,7 @@ class _ContactFormState extends State<ContactForm> {
     );
   }
 
-  void _save(Contact newContact, BuildContext context) async {
+  void _save(ContactDao contactDao, Contact newContact, BuildContext context) async {
     await contactDao.save(newContact);
     Navigator.pop(context);
   }

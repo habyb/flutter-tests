@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttertests/main.dart';
 import 'package:fluttertests/models/contact.dart';
@@ -36,11 +35,11 @@ void main() {
       }
       return false;
     });
-    // expect(contactItem, findsOneWidget);
-    // await tester.tap(contactItem);
-    // await tester.pumpAndSettle();
+    expect(contactItem, findsOneWidget);
+    await tester.tap(contactItem);
+    await tester.pumpAndSettle();
 
-    // final transactionForm = find.byType(TransactionForm);
-    // expect(transactionForm, findsOneWidget);
+    final transactionForm = find.byType(TransactionForm);
+    expect(transactionForm, findsOneWidget);
   });
 }
