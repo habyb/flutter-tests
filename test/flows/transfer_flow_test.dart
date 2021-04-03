@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fluttertests/components/response_dialog.dart';
 import 'package:fluttertests/components/transaction_auth_dialog.dart';
 import 'package:fluttertests/main.dart';
 import 'package:fluttertests/models/contact.dart';
+import 'package:fluttertests/models/transaction.dart';
 import 'package:fluttertests/screens/contacts_list.dart';
 import 'package:fluttertests/screens/dashboard.dart';
 import 'package:fluttertests/screens/transaction_form.dart';
@@ -23,10 +25,8 @@ void main() {
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
 
-    when(mockContactDao.findAll()).thenAnswer((invocation) async {
-      // debugPrint('name invovcation ${invocation.memberName}');
-      return [Contact(0, 'Sam', 123)];
-    });
+    final sam = Contact(0, 'Sam', 123);
+    when(mockContactDao.findAll()).thenAnswer((invocation) async => [sam]);
     await clickOnTheTransferFeatureItem(tester);
     await tester.pumpAndSettle();
 
@@ -65,5 +65,33 @@ void main() {
 
     final transactionAuthDialog = find.byType(TransactionAuthDialog);
     expect(transactionAuthDialog, findsOneWidget);
+
+    final textFieldPassword =
+        find.byKey(transactionAuthDialogTextFieldPasswordKey);
+    expect(textFieldPassword, findsOneWidget);
+    await tester.enterText(textFieldPassword, '1000');
+
+    final cancelButton = find.widgetWithText(TextButton, 'Cancel');
+    expect(cancelButton, findsOneWidget);
+    final confirmButton = find.widgetWithText(TextButton, 'Confirm');
+    expect(confirmButton, findsOneWidget);
+
+    when(mockTransactionWebClient.save(Transaction(null, 200, sam), '1000'))
+        .thenAnswer((_) async => Transaction(null, 200, sam));
+
+    await tester.tap(confirmButton);
+    await tester.pumpAndSettle();
+
+    final successDialog = find.byType(SuccessDialog);
+    expect(successDialog, findsOneWidget);
+
+    final okButton = find.widgetWithText(TextButton, 'Ok');
+    expect(okButton, findsOneWidget);
+
+    await tester.tap(okButton);
+    await tester.pumpAndSettle();
+
+    final contactsListBack = find.byType(ContactsList);
+    expect(contactsListBack, findsOneWidget);
   });
 }
