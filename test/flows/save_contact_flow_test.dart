@@ -5,13 +5,19 @@ import 'package:fluttertests/screens/contact_form.dart';
 import 'package:fluttertests/screens/contacts_list.dart';
 import 'package:fluttertests/screens/dashboard.dart';
 
+import '../matchers/matchers.dart';
 import '../mocks/mocks.dart';
 import 'actions.dart';
 
 void main() {
   testWidgets('should save a contact', (tester) async {
     final mockContactDao = MockContactDao();
-    await tester.pumpWidget(FlutterTests(contactDao: mockContactDao));
+    final mockTransactionWebClient = MockTransactionWebClient();
+
+    await tester.pumpWidget(FlutterTests(
+      transactionWebClient: mockTransactionWebClient,
+      contactDao: mockContactDao,
+    ));
 
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
@@ -33,12 +39,12 @@ void main() {
     expect(contactForm, findsOneWidget);
 
     final nameTextField = find
-        .byWidgetPredicate((widget) => _textFieldMatcher(widget, 'Full name'));
+        .byWidgetPredicate((widget) => textFieldByLabelTextMatcher(widget, 'Full name'));
     expect(nameTextField, findsOneWidget);
     await tester.enterText(nameTextField, 'Alex');
 
     final accountNumberTextField = find.byWidgetPredicate(
-        (widget) => _textFieldMatcher(widget, 'Account number'));
+        (widget) => textFieldByLabelTextMatcher(widget, 'Account number'));
     expect(accountNumberTextField, findsOneWidget);
     await tester.enterText(accountNumberTextField, '1000');
 
@@ -51,11 +57,4 @@ void main() {
 
     // verify(mockContactDao.findAll());
   });
-}
-
-bool _textFieldMatcher(Widget widget, String labelTest) {
-  if (widget is TextField) {
-    return widget.decoration.labelText == labelTest;
-  }
-  return false;
 }

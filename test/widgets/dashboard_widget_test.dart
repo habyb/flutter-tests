@@ -5,11 +5,18 @@ import 'package:fluttertests/main.dart';
 import 'package:fluttertests/screens/dashboard.dart';
 
 import '../matchers/matchers.dart';
+import '../mocks/mocks.dart';
 
 void main() {
   testWidgets('should display the main image when the dashboard is opened',
       (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: FlutterTests(contactDao: ContactDao(),)));
+    final mockTransactionWebClient = MockTransactionWebClient();
+
+    await tester.pumpWidget(MaterialApp(
+        home: FlutterTests(
+      transactionWebClient: mockTransactionWebClient,
+      contactDao: ContactDao(),
+    )));
     final mainImage = find.byType(Image);
     expect(mainImage, findsOneWidget);
   });

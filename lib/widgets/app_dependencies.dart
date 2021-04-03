@@ -1,11 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:fluttertests/database/dao/contact_dao.dart';
+import 'package:fluttertests/http/webclients/transaction_webclient.dart';
 
 class AppDependencies extends InheritedWidget {
   final ContactDao contactDao;
+  final TransactionWebClient transactionWebClient;
 
   AppDependencies({
     @required this.contactDao,
+    @required this.transactionWebClient,
     @required Widget child,
   }) : super(child: child);
 
@@ -14,6 +17,7 @@ class AppDependencies extends InheritedWidget {
 
   @override
   bool updateShouldNotify(AppDependencies oldWidget) {
-    return contactDao != oldWidget.contactDao;
+    return contactDao != oldWidget.contactDao ||
+        transactionWebClient != oldWidget.transactionWebClient;
   }
 }
